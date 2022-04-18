@@ -8,6 +8,7 @@ The following rules are supported:
 + Week day: any day of week (e.g. Sunday)
 + Yearly days: same date every year
 + Moveable yearly days: as yearly days, but moved to the next non-weekend day if it falls on a weekday
++ Modified movable yearly days: Move to Friday if it falls on Saturday and to Monday if it falls on Sunday
 + Single day: special holiday valid only in one year
 + Easter offset: day that is calculated relative to Easter sunday
 + Month week day: nth weekday of a given month

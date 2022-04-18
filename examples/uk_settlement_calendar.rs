@@ -1,5 +1,5 @@
-use chrono::{NaiveDate, Weekday};
 use cal_calc::{Calendar, Holiday, NthWeek};
+use chrono::{NaiveDate, Weekday};
 
 fn main() {
     // we choose the uk settlement calendar as an example, because of the many exceptions

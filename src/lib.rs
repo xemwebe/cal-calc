@@ -46,6 +46,15 @@ pub enum Holiday {
         first: Option<i32>,
         last: Option<i32>,
     },
+    /// Occurs every year, but is moved to previous Friday if it falls on Saturday
+    /// and to the next Monday if it falls on a Sunday.
+    /// `first` and `last` are the first and last year this day is a holiday (inclusively).
+    ModifiedMovableYearlyDay {
+        month: u32,
+        day: u32,
+        first: Option<i32>,
+        last: Option<i32>,
+    },
     /// A single holiday which is valid only once in time.
     SingularDay(NaiveDate),
     /// A holiday that is defined in relative days (e.g. -2 for Good Friday) to Easter (Sunday).
@@ -111,7 +120,6 @@ impl Calendar {
                     let (first, last) = Self::calc_first_and_last(start, end, first, last);
                     for year in first..last + 1 {
                         let date = NaiveDate::from_ymd(year, *month, *day);
-                        // must not fall on weekend, but also not on another holiday! (not yet implemented)
                         let mut date = match date.weekday() {
                             Weekday::Sat => date.succ().succ(),
                             Weekday::Sun => date.succ(),
@@ -120,6 +128,23 @@ impl Calendar {
                         while holidays.get(&date).is_some() {
                             date = date.succ();
                         }
+                        holidays.insert(date);
+                    }
+                }
+                Holiday::ModifiedMovableYearlyDay {
+                    month,
+                    day,
+                    first,
+                    last,
+                } => {
+                    let (first, last) = Self::calc_first_and_last(start, end, first, last);
+                    for year in first..last + 1 {
+                        let date = NaiveDate::from_ymd(year, *month, *day);
+                        let date = match date.weekday() {
+                            Weekday::Sat => date.pred(),
+                            Weekday::Sun => date.succ(),
+                            _ => date,
+                        };
                         holidays.insert(date);
                     }
                 }
@@ -166,10 +191,7 @@ impl Calendar {
                 }
             }
         }
-        Calendar {
-            holidays,
-            weekdays,
-        }
+        Calendar { holidays, weekdays }
     }
 
     /// Calculate the next business day
@@ -231,7 +253,7 @@ impl Calendar {
 
 pub struct CalendarNotFound {}
 
-pub trait CalendarProvider{
+pub trait CalendarProvider {
     fn get_calendar(&self, calendar_name: &str) -> Result<&Calendar, CalendarNotFound>;
 }
 
@@ -248,18 +270,17 @@ pub fn last_day_of_month(year: i32, month: u32) -> u32 {
         .day()
 }
 
-
 pub struct SimpleCalendar {
-    cal: Calendar
+    cal: Calendar,
 }
 
 impl SimpleCalendar {
-    pub fn new( cal: &Calendar ) -> SimpleCalendar {
-        SimpleCalendar{ cal: cal.clone() }
+    pub fn new(cal: &Calendar) -> SimpleCalendar {
+        SimpleCalendar { cal: cal.clone() }
     }
 }
 
-impl CalendarProvider for SimpleCalendar {  
+impl CalendarProvider for SimpleCalendar {
     fn get_calendar(&self, _calendar_name: &str) -> Result<&Calendar, CalendarNotFound> {
         Ok(&self.cal)
     }
@@ -267,7 +288,9 @@ impl CalendarProvider for SimpleCalendar {
 
 impl Default for SimpleCalendar {
     fn default() -> SimpleCalendar {
-        SimpleCalendar{ cal: Calendar::calc_calendar(&[], 2020, 2021) }
+        SimpleCalendar {
+            cal: Calendar::calc_calendar(&[], 2020, 2021),
+        }
     }
 }
 
@@ -574,5 +597,20 @@ mod tests {
         for i in 0..holidays.len() {
             assert_eq!(holidays[i], holidays2[i]);
         }
+    }
+
+    #[test]
+    fn test_modified_movable() {
+        let holidays = vec![Holiday::ModifiedMovableYearlyDay {
+            month: 12,
+            day: 25,
+            first: None,
+            last: None,
+        }];
+        let cal = Calendar::calc_calendar(&holidays, 2020, 2023);
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2020, 12, 25)));
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2021, 12, 24)));
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2022, 12, 26)));
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2023, 12, 25)));
     }
 }
