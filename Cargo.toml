@@ -1,0 +1,19 @@
+[package]
+name = "cal-calc"
+version = "0.1.0"
+authors = ["Mark Beinker <mwb@quantlink.de>"]
+edition = "2021"
+description = "Simple tool for calculating holidays based on a set of holiday rules"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/xemwebe/cal-calc"
+readme = "README.md"
+keywords = ["calendar", "busines days"]
+categories = ["date-and-time","mathematics"]
+
+[dependencies]
+chrono = { version = "0.4", features = ["serde"] }
+computus = "1.0"
+serde = { version = "1.0.*", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1.0.*"
