@@ -140,12 +140,16 @@ impl Calendar {
                     let (first, last) = Self::calc_first_and_last(start, end, first, last);
                     for year in first..last + 1 {
                         let date = NaiveDate::from_ymd(year, *month, *day);
-                        let date = match date.weekday() {
+                        let moved_date = match date.weekday() {
                             Weekday::Sat => date.pred(),
                             Weekday::Sun => date.succ(),
                             _ => date,
                         };
-                        holidays.insert(date);
+                        if moved_date.month() == date.month() {
+                            holidays.insert(moved_date);
+                        } else {
+                            holidays.insert(date);
+                        }
                     }
                 }
                 Holiday::EasterOffset {
@@ -601,9 +605,16 @@ mod tests {
 
     #[test]
     fn test_modified_movable() {
-        let holidays = vec![Holiday::ModifiedMovableYearlyDay {
+        let holidays = vec![
+            Holiday::ModifiedMovableYearlyDay {
             month: 12,
             day: 25,
+            first: None,
+            last: None,
+        },
+        Holiday::ModifiedMovableYearlyDay {
+            month: 1,
+            day: 1,
             first: None,
             last: None,
         }];
@@ -612,5 +623,9 @@ mod tests {
         assert!(cal.is_holiday(NaiveDate::from_ymd(2021, 12, 24)));
         assert!(cal.is_holiday(NaiveDate::from_ymd(2022, 12, 26)));
         assert!(cal.is_holiday(NaiveDate::from_ymd(2023, 12, 25)));
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2020, 1, 1)));
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2021, 1, 1)));
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2022, 1, 1)));
+        assert!(cal.is_holiday(NaiveDate::from_ymd(2023, 1, 2)));
     }
 }
