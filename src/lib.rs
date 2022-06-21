@@ -12,6 +12,10 @@ use chrono::{Datelike, Duration, NaiveDate, Weekday};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
+mod calendar_definitions;
+
+pub use calendar_definitions::*;
+
 /// Specifies the nth week of a month
 #[derive(Deserialize, Serialize, Debug, PartialEq)]
 pub enum NthWeek {
@@ -607,17 +611,18 @@ mod tests {
     fn test_modified_movable() {
         let holidays = vec![
             Holiday::ModifiedMovableYearlyDay {
-            month: 12,
-            day: 25,
-            first: None,
-            last: None,
-        },
-        Holiday::ModifiedMovableYearlyDay {
-            month: 1,
-            day: 1,
-            first: None,
-            last: None,
-        }];
+                month: 12,
+                day: 25,
+                first: None,
+                last: None,
+            },
+            Holiday::ModifiedMovableYearlyDay {
+                month: 1,
+                day: 1,
+                first: None,
+                last: None,
+            },
+        ];
         let cal = Calendar::calc_calendar(&holidays, 2020, 2023);
         assert!(cal.is_holiday(NaiveDate::from_ymd(2020, 12, 25)));
         assert!(cal.is_holiday(NaiveDate::from_ymd(2021, 12, 24)));
