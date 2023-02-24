@@ -24,6 +24,9 @@ pub enum NthWeek {
     Third,
     Fourth,
     Last,
+    SecondLast,
+    ThirdLast,
+    FourthLast,
 }
 
 #[derive(Deserialize, Serialize, Debug, PartialEq)]
@@ -39,7 +42,7 @@ pub enum Holiday {
         first: Option<i32>,
         last: Option<i32>,
     },
-    /// Occurs every year, but is moved to next non-weekend day if it falls on a weekday.
+    /// Occurs every year, but is moved to next non-weekend day if it falls on a weekend.
     /// Note that Saturday and Sunday here assumed to be weekend days, even if these days
     /// are not defined as weekends in this calendar. If the next Monday is already a holiday,
     /// the date will be moved to the next available business day.
@@ -186,11 +189,17 @@ impl Calendar {
                             NthWeek::Third => 15,
                             NthWeek::Fourth => 22,
                             NthWeek::Last => last_day_of_month(year, *month),
+                            NthWeek::SecondLast => last_day_of_month(year, *month)-7,
+                            NthWeek::ThirdLast => last_day_of_month(year, *month)-14,
+                            NthWeek::FourthLast => last_day_of_month(year, *month)-21,
                         };
                         let mut date = NaiveDate::from_ymd(year, *month, day);
                         while date.weekday() != *weekday {
                             date = match nth {
-                                NthWeek::Last => date.pred(),
+                                NthWeek::Last 
+                                | NthWeek::SecondLast
+                                | NthWeek::ThirdLast
+                                | NthWeek::FourthLast => date.pred(),
                                 _ => date.succ(),
                             }
                         }
