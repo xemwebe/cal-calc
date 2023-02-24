@@ -11,9 +11,10 @@ keywords = ["calendar", "business", "exchange", "holiday"]
 categories = ["date-and-time","mathematics"]
 
 [dependencies]
-chrono = { version = "0.4", features = ["serde"] }
+time = { version = "0.3", features = ["macros","serde"] }
 computus = "1.0"
 serde = { version = "1.0.*", features = ["derive"] }
+thiserror = "1.0"
 
 [dev-dependencies]
 serde_json = "1.0.*"

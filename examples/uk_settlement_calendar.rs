@@ -1,13 +1,13 @@
 use cal_calc::{Calendar, Holiday, NthWeek};
-use chrono::{NaiveDate, Weekday};
+use time::{macros::date, Weekday};
 
 fn main() {
     // we choose the uk settlement calendar as an example, because of the many exceptions
     let uk_settlement_holidays = vec![
         // Saturdays
-        Holiday::WeekDay(Weekday::Sat),
+        Holiday::WeekDay(Weekday::Saturday),
         // Sundays
-        Holiday::WeekDay(Weekday::Sun),
+        Holiday::WeekDay(Weekday::Sunday),
         // New Year's day
         Holiday::MovableYearlyDay {
             month: 1,
@@ -30,23 +30,23 @@ fn main() {
         // first Monday of May, moved two times in history to 8th of May
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::First,
             first: None,
             last: Some(1994),
         },
-        Holiday::SingularDay(NaiveDate::from_ymd(1995, 5, 8)),
+        Holiday::SingularDay(date!(1995-5-8)),
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::First,
             first: Some(1996),
             last: Some(2019),
         },
-        Holiday::SingularDay(NaiveDate::from_ymd(2020, 5, 8)),
+        Holiday::SingularDay(date!(2020-5-8)),
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::First,
             first: Some(2021),
             last: None,
@@ -54,21 +54,21 @@ fn main() {
         // last Monday of May (Spring Bank Holiday), has been skipped two times
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: None,
             last: Some(2001),
         },
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: Some(2003),
             last: Some(2011),
         },
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: Some(2013),
             last: None,
@@ -76,7 +76,7 @@ fn main() {
         // last Monday of August (Summer Bank Holiday)
         Holiday::MonthWeekday {
             month: 8,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: None,
             last: None,
@@ -96,17 +96,17 @@ fn main() {
             last: None,
         },
         // Golden Jubilee
-        Holiday::SingularDay(NaiveDate::from_ymd(2002, 6, 3)),
+        Holiday::SingularDay(date!(2002-6-3)),
         // Special Spring Holiday
-        Holiday::SingularDay(NaiveDate::from_ymd(2002, 6, 4)),
+        Holiday::SingularDay(date!(2002-6-4)),
         // Royal Wedding
-        Holiday::SingularDay(NaiveDate::from_ymd(2011, 4, 29)),
+        Holiday::SingularDay(date!(2011-4-29)),
         // Diamond Jubilee
-        Holiday::SingularDay(NaiveDate::from_ymd(2012, 6, 4)),
+        Holiday::SingularDay(date!(2012-6-4)),
         // Special Spring Holiday
-        Holiday::SingularDay(NaiveDate::from_ymd(2012, 6, 5)),
+        Holiday::SingularDay(date!(2012-6-5)),
         // Introduction of EUR
-        Holiday::SingularDay(NaiveDate::from_ymd(1999, 12, 31)),
+        Holiday::SingularDay(date!(1999-12-31)),
     ];
     let uk_cal = Calendar::calc_calendar(&uk_settlement_holidays, 1999, 2020);
     println!("{:#?}", uk_cal);

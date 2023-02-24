@@ -1,12 +1,12 @@
 use super::{Holiday, NthWeek, Weekday};
-use chrono::NaiveDate;
+use time::macros::date;
 
 pub fn us_settlement_holidays() -> Vec<Holiday> {
     vec![
         // Saturdays
-        Holiday::WeekDay(Weekday::Sat),
+        Holiday::WeekDay(Weekday::Saturday),
         // Sundays
-        Holiday::WeekDay(Weekday::Sun),
+        Holiday::WeekDay(Weekday::Sunday),
         // New Year's day
         Holiday::ModifiedMovableYearlyDay {
             month: 1,
@@ -17,7 +17,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         // Martin Luther King's birthday (third Monday in January)
         Holiday::MonthWeekday {
             month: 1,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Third,
             first: Some(1983),
             last: None,
@@ -25,7 +25,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         // Washington's birthday (third Monday in February)
         Holiday::MonthWeekday {
             month: 2,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Third,
             first: Some(1971),
             last: None,
@@ -39,7 +39,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         // Memorial Day (last Monday in May)
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: Some(1971),
             last: None,
@@ -67,7 +67,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         // Labor Day (first Monday in September)
         Holiday::MonthWeekday {
             month: 9,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::First,
             first: None,
             last: None,
@@ -75,7 +75,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         // Columbus Day (second Monday in October)
         Holiday::MonthWeekday {
             month: 10,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Second,
             first: Some(1971),
             last: None,
@@ -83,7 +83,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         // Veteran's Day
         Holiday::MonthWeekday {
             month: 10,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Fourth,
             first: None,
             last: Some(1970),
@@ -96,7 +96,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         },
         Holiday::MonthWeekday {
             month: 10,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Fourth,
             first: Some(1978),
             last: None,
@@ -104,7 +104,7 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
         // Thanksgiving Day (fourth Thursday in November)
         Holiday::MonthWeekday {
             month: 11,
-            weekday: Weekday::Thu,
+            weekday: Weekday::Thursday,
             nth: NthWeek::Fourth,
             first: None,
             last: None,
@@ -122,9 +122,9 @@ pub fn us_settlement_holidays() -> Vec<Holiday> {
 pub fn uk_settlement_holidays() -> Vec<Holiday> {
     vec![
         // Saturdays
-        Holiday::WeekDay(Weekday::Sat),
+        Holiday::WeekDay(Weekday::Saturday),
         // Sundays
-        Holiday::WeekDay(Weekday::Sun),
+        Holiday::WeekDay(Weekday::Sunday),
         // New Year's day
         Holiday::MovableYearlyDay {
             month: 1,
@@ -147,23 +147,23 @@ pub fn uk_settlement_holidays() -> Vec<Holiday> {
         // first Monday of May, moved two times in history to 8th of May
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::First,
             first: None,
             last: Some(1994),
         },
-        Holiday::SingularDay(NaiveDate::from_ymd(1995, 5, 8)),
+        Holiday::SingularDay(date!(1995-5-8)),
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::First,
             first: Some(1996),
             last: Some(2019),
         },
-        Holiday::SingularDay(NaiveDate::from_ymd(2020, 5, 8)),
+        Holiday::SingularDay(date!(2020-5-8)),
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::First,
             first: Some(2021),
             last: None,
@@ -171,21 +171,21 @@ pub fn uk_settlement_holidays() -> Vec<Holiday> {
         // last Monday of May (Spring Bank Holiday), has been skipped two times
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: None,
             last: Some(2001),
         },
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: Some(2003),
             last: Some(2011),
         },
         Holiday::MonthWeekday {
             month: 5,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: Some(2013),
             last: None,
@@ -193,7 +193,7 @@ pub fn uk_settlement_holidays() -> Vec<Holiday> {
         // last Monday of August (Summer Bank Holiday)
         Holiday::MonthWeekday {
             month: 8,
-            weekday: Weekday::Mon,
+            weekday: Weekday::Monday,
             nth: NthWeek::Last,
             first: None,
             last: None,
@@ -213,26 +213,26 @@ pub fn uk_settlement_holidays() -> Vec<Holiday> {
             last: None,
         },
         // Golden Jubilee
-        Holiday::SingularDay(NaiveDate::from_ymd(2002, 6, 3)),
+        Holiday::SingularDay(date!(2002-6-3)),
         // Special Spring Holiday
-        Holiday::SingularDay(NaiveDate::from_ymd(2002, 6, 4)),
+        Holiday::SingularDay(date!(2002-6-4)),
         // Royal Wedding
-        Holiday::SingularDay(NaiveDate::from_ymd(2011, 4, 29)),
+        Holiday::SingularDay(date!(2011-4-29)),
         // Diamond Jubilee
-        Holiday::SingularDay(NaiveDate::from_ymd(2012, 6, 4)),
+        Holiday::SingularDay(date!(2012-6-4)),
         // Special Spring Holiday
-        Holiday::SingularDay(NaiveDate::from_ymd(2012, 6, 5)),
+        Holiday::SingularDay(date!(2012-6-5)),
         // Introduction of EUR
-        Holiday::SingularDay(NaiveDate::from_ymd(1999, 12, 31)),
+        Holiday::SingularDay(date!(1999-12-31)),
     ]
 }
 
 pub fn target_holidays() -> Vec<Holiday> {
     vec![
         // Saturdays
-        Holiday::WeekDay(Weekday::Sat),
+        Holiday::WeekDay(Weekday::Saturday),
         // Sundays
-        Holiday::WeekDay(Weekday::Sun),
+        Holiday::WeekDay(Weekday::Sunday),
         // New Year's day
         Holiday::YearlyDay {
             month: 1,
@@ -274,19 +274,19 @@ pub fn target_holidays() -> Vec<Holiday> {
             last: None,
         },
         // December 31st, 1998, 1999, and 2001 only
-        Holiday::SingularDay(NaiveDate::from_ymd(1998, 12, 31)),
-        Holiday::SingularDay(NaiveDate::from_ymd(1999, 12, 31)),
-        Holiday::SingularDay(NaiveDate::from_ymd(2001, 12, 31)),
-        Holiday::SingularDay(NaiveDate::from_ymd(1995, 5, 8)),
+        Holiday::SingularDay(date!(1998-12-31)),
+        Holiday::SingularDay(date!(1999-12-31)),
+        Holiday::SingularDay(date!(2001-12-31)),
+        Holiday::SingularDay(date!(1995-5-8)),
     ]
 }
 
 pub fn nok_holidays() -> Vec<Holiday> {
     vec![
         // Saturdays
-        Holiday::WeekDay(Weekday::Sat),
+        Holiday::WeekDay(Weekday::Saturday),
         // Sundays
-        Holiday::WeekDay(Weekday::Sun),
+        Holiday::WeekDay(Weekday::Sunday),
         // Holy Thursday
         Holiday::EasterOffset {
             offset: -4,
