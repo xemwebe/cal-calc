@@ -1,6 +1,6 @@
 [package]
 name = "cal-calc"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Mark Beinker <mwb@quantlink.de>"]
 edition = "2021"
 description = "Simple tool for calculating holidays based on a set of holiday rules"
@@ -8,13 +8,13 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/xemwebe/cal-calc"
 readme = "README.md"
 keywords = ["calendar", "business", "exchange", "holiday"]
-categories = ["date-and-time","mathematics"]
+categories = ["date-and-time", "mathematics"]
 
 [dependencies]
-time = { version = "0.3", features = ["macros","serde"] }
+time = { version = "0.3", features = ["macros", "serde"] }
 computus = "1.0"
 serde = { version = "1.0.*", features = ["derive"] }
-thiserror = "1.0"
+thiserror = "2.0"
 
 [dev-dependencies]
 serde_json = "1.0.*"

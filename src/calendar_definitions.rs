@@ -152,7 +152,7 @@ pub fn uk_settlement_holidays() -> Vec<Holiday> {
             first: None,
             last: Some(1994),
         },
-        Holiday::SingularDay(date!(1995-5-8)),
+        Holiday::SingularDay(date!(1995 - 5 - 8)),
         Holiday::MonthWeekday {
             month: 5,
             weekday: Weekday::Monday,
@@ -160,7 +160,7 @@ pub fn uk_settlement_holidays() -> Vec<Holiday> {
             first: Some(1996),
             last: Some(2019),
         },
-        Holiday::SingularDay(date!(2020-5-8)),
+        Holiday::SingularDay(date!(2020 - 5 - 8)),
         Holiday::MonthWeekday {
             month: 5,
             weekday: Weekday::Monday,
@@ -213,17 +213,17 @@ pub fn uk_settlement_holidays() -> Vec<Holiday> {
             last: None,
         },
         // Golden Jubilee
-        Holiday::SingularDay(date!(2002-6-3)),
+        Holiday::SingularDay(date!(2002 - 6 - 3)),
         // Special Spring Holiday
-        Holiday::SingularDay(date!(2002-6-4)),
+        Holiday::SingularDay(date!(2002 - 6 - 4)),
         // Royal Wedding
-        Holiday::SingularDay(date!(2011-4-29)),
+        Holiday::SingularDay(date!(2011 - 4 - 29)),
         // Diamond Jubilee
-        Holiday::SingularDay(date!(2012-6-4)),
+        Holiday::SingularDay(date!(2012 - 6 - 4)),
         // Special Spring Holiday
-        Holiday::SingularDay(date!(2012-6-5)),
+        Holiday::SingularDay(date!(2012 - 6 - 5)),
         // Introduction of EUR
-        Holiday::SingularDay(date!(1999-12-31)),
+        Holiday::SingularDay(date!(1999 - 12 - 31)),
     ]
 }
 
@@ -274,10 +274,10 @@ pub fn target_holidays() -> Vec<Holiday> {
             last: None,
         },
         // December 31st, 1998, 1999, and 2001 only
-        Holiday::SingularDay(date!(1998-12-31)),
-        Holiday::SingularDay(date!(1999-12-31)),
-        Holiday::SingularDay(date!(2001-12-31)),
-        Holiday::SingularDay(date!(1995-5-8)),
+        Holiday::SingularDay(date!(1998 - 12 - 31)),
+        Holiday::SingularDay(date!(1999 - 12 - 31)),
+        Holiday::SingularDay(date!(2001 - 12 - 31)),
+        Holiday::SingularDay(date!(1995 - 5 - 8)),
     ]
 }
 
