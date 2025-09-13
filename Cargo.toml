@@ -1,6 +1,6 @@
 [package]
 name = "cal-calc"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Mark Beinker <mwb@quantlink.de>"]
 edition = "2021"
 description = "Simple tool for calculating holidays based on a set of holiday rules"
